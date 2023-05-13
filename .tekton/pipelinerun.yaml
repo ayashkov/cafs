@@ -6,7 +6,6 @@ metadata:
   annotations:
     pipelinesascode.tekton.dev/on-event: "[pull_request, push]"
     pipelinesascode.tekton.dev/on-target-branch: "[main,feature/*,release/*]"
-    pipelinesascode.tekton.dev/task: "[git-clone, gradle]"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
 spec:
   params:
