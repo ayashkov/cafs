@@ -29,7 +29,6 @@ class CaFileSystemProviderTest {
             provider.newFileSystem(URI.create("file:///dir"), none)
         }.isInstanceOf(FileSystemAlreadyExistsException::class.java)
             .hasMessage("file:///dir")
-
     }
 
     @Test
