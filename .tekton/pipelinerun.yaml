@@ -14,6 +14,9 @@ spec:
       value: "{{ repo_url }}"
     - name: revision
       value: "{{ revision }}"
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
   pipelineSpec:
     params:
       - name: repo_url
