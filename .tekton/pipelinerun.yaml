@@ -39,9 +39,10 @@ spec:
           - name: revision
             value: $(params.revision)
       - name: build
-        runAfter: fetch-repository
         taskRef:
           name: gradle
+        runAfter:
+          - fetch-repository
         workspaces:
           - name: source
             workspace: source
