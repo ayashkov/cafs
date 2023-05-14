@@ -6,7 +6,7 @@ metadata:
   annotations:
     pipelinesascode.tekton.dev/on-event: "[pull_request, push]"
     pipelinesascode.tekton.dev/on-target-branch: "[main,feature/*,release/*]"
-    pipelinesascode.tekton.dev/task: "git-clone"
+    pipelinesascode.tekton.dev/task: "[git-clone,gradle]"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
 spec:
   params:
@@ -38,30 +38,35 @@ spec:
             value: $(params.repo_url)
           - name: revision
             value: $(params.revision)
-      - name: noop-task
-        runAfter:
-          - fetch-repository
+      - name: build
+        runAfter: fetch-repository
+        taskRef:
+          name: gradle
         workspaces:
           - name: source
             workspace: source
-        taskSpec:
-          workspaces:
-            - name: source
-          steps:
-            - name: noop-task
-              image: alpine:latest
-              workingDir: $(workspaces.source.path)
-              script: |
-                exit 0
+          - name: maven-config
+            workspace: maven-config
+            mountPath: /home/gradle/.m2
+        params:
+          - name: GRADLE_IMAGE
+            value: gradle:8.1.1-jdk17
   workspaces:
-  - name: source
-    volumeClaimTemplate:
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-  - name: basic-auth
-    secret:
-      secretName: "{{ git_auth_secret }}"
+    - name: source
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+    - name: basic-auth
+      secret:
+        secretName: "{{ git_auth_secret }}"
+    - name: maven-config
+      projected:
+        sources:
+          - configMap:
+              name: maven-settings
+          - secret:
+              name: maven-settings
