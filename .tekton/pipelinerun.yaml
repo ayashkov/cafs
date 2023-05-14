@@ -49,6 +49,15 @@ spec:
         params:
           - name: GRADLE_IMAGE
             value: gradle:8.1.1-jdk17
+  taskRunSpecs:
+    - pipelineTaskName: build
+      computeResources:
+        requests:
+          cpu: 500m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1024Mi
   workspaces:
     - name: source
       volumeClaimTemplate:
