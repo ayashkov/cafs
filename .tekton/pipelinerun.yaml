@@ -49,6 +49,14 @@ spec:
         params:
           - name: GRADLE_IMAGE
             value: gradle:8.1.1-jdk17
+          - name: TASKS
+            value:
+              - projects
+              - properties
+              - resolvableConfigurations
+              - javaToolchains
+              - dependencies
+              - tasks
   taskRunSpecs:
     - pipelineTaskName: build
       computeResources:
@@ -70,10 +78,3 @@ spec:
     - name: basic-auth
       secret:
         secretName: "{{ git_auth_secret }}"
-    - name: maven-config
-      projected:
-        sources:
-          - configMap:
-              name: maven-settings
-          - secret:
-              name: maven-settings
