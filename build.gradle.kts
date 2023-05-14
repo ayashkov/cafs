@@ -39,9 +39,11 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }
 
-//kotlin {
-//    jvmToolchain(11)
-//}
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
 
 tasks {
     test {
