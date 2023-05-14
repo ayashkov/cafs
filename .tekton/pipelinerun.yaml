@@ -46,9 +46,6 @@ spec:
         workspaces:
           - name: source
             workspace: source
-          - name: maven-config
-            workspace: maven-config
-            mountPath: /home/gradle/.m2
         params:
           - name: GRADLE_IMAGE
             value: gradle:8.1.1-jdk17
