@@ -49,14 +49,6 @@ spec:
         params:
           - name: GRADLE_IMAGE
             value: gradle:8.1.1-jdk17
-          - name: TASKS
-            value:
-              - projects
-              - properties
-              - resolvableConfigurations
-              - javaToolchains
-              - dependencies
-              - tasks
   taskRunSpecs:
     - pipelineTaskName: build
       computeResources:
